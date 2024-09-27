@@ -1,11 +1,11 @@
-<h3>Login</h3>
+
 <br><br>
-<form action="/login" method="post">
-<label for="user">Usuario: </label>
-<input type="text" name="user" required>
+<form action="/api/sessions/login" method="post">
+<label for="user">E-mail: </label>
+<input type="text" name="email">
 <br><br>
 <label for="password">Contraseñá: </label>
-<input type="text" name="password" required>
+<input type="text" name="password">
 <br><br>
 <button type="submit"> Iniciar </button>
 </form>

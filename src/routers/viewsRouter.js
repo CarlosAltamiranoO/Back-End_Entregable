@@ -66,19 +66,17 @@ viewsRouter.get('/carts/:cid', async (req, res) => {
         console.log(error)
         res.send('Los datos ingresados son incorrectos')
     }
-    
-    viewsRouter.get("/register", (req, res) => {
-        res.render("register", {
-            pageTitle: "REGISTRO",
-            labelTitle: "Registro",
-        }); 
-    })
-    
-    viewsRouter.get("/login", (req, res) => {
-        res.render("login", {
-            pageTitle: "LOGIN",
-            labelTitle: "login",
-        });
-    })
+})
+viewsRouter.get("/register", (req, res) => {
+    res.render("register", {
+        pageTitle: "REGISTRO",
+        labelTitle: "Registro",
+    }); 
+})
 
+viewsRouter.get("/login", (req, res) => {
+    res.render("login", {
+        pageTitle: "LOGIN",
+        labelTitle: "login",
+    });
 })

@@ -10,27 +10,28 @@ const manager = new UserManager()
 const managerC = new CartsManager()
 
 userRouter.post("/register", async (req, res) => {
-    const {firtname, lastname, age, email, rol, password} = req.body; 
+    const {firstname, lastname, age, email, rol, pass} = req.body; 
 
     try {
         //Verificamos si ya existe el usuario. 
 
-        if (await manager.getCartById(email)) {
+        if (await manager.getUserByEmail(email)) {
             return res.status(400).send("El usuario ya existe en nuestra base de datos"); 
         }
 
         //Si no existe, lo puedo crear: 
-        password = createHash(password)
-        const cart = await managerC.addcart()
+        const password = createHash(pass)
+        const carrito = await managerC.addcart()
+        const cart = carrito._id
 
-        const nuevoUsuario = await manager.addUser({firtname, lastname, age, email, password, cart, rol })
+        const nuevoUsuario = await manager.addUser({firstname, lastname, age, email, password, cart, rol })
 
         //Generar el Token JWT
         const token = jwt.sign({usuario: nuevoUsuario.first_name}, "coderhouse", {expiresIn: "1h"}); 
 
         //Lo mandamos con la cookie. 
 
-        res.cookie("coderCookieToken", token, {
+        res.cookie("userCookieToken", token, {
             maxAge: 3600000, 
             httpOnly: true
         })
@@ -38,15 +39,16 @@ userRouter.post("/register", async (req, res) => {
         res.redirect("/api/sessions/current"); 
 
     } catch (error) {
+        console.log(error)
         res.status(500).send("Error interno del servidor"); 
     }
 })
-router.post("/login", async (req, res) => {
-    const {email, password} = req.body; 
+userRouter.post("/login", async (req, res) => {
+    const {email, password} = req.body;
 
     try {
         //Buscamos al usuario en MongoDB: 
-        const usuarioEncontrado = await manager.getCartById(email); 
+        const usuarioEncontrado = await manager.getUserByEmail(email); 
 
         //Si no lo encuentro, lo puedo mandar a registrarse: 
         if (!usuarioEncontrado) {
@@ -64,7 +66,7 @@ router.post("/login", async (req, res) => {
 
         //Enviamos con la cookie: 
 
-        res.cookie("coderCookieToken", token, {
+        res.cookie("userCookieToken", token, {
             maxAge: 3600000, 
             httpOnly: true
         })
@@ -73,4 +75,18 @@ router.post("/login", async (req, res) => {
     } catch (error) {
         res.status(500).send("Error interno del servidor"); 
     }
+})
+//Logout
+userRouter.post("/logout", (req, res) => {
+    res.clearCookie("userCookieToken"); 
+    res.redirect("/login"); 
+}) 
+
+userRouter.get("/current", passport.authenticate("current", {session: false}), (req, res) => {
+    console.log(req.user.usuario)
+    res.render("home2", {
+        pageTitle: "PRUEBA",
+        labelTitle: "logeado",
+        usuario: req.user.first_name
+    });
 })

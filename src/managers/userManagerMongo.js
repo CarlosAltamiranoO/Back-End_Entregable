@@ -1,5 +1,4 @@
 import userModel from "../models/user.model.js"
-import manager from "./cartsManagerMongo.js"
 
 export class UserManager {
     constructor() {

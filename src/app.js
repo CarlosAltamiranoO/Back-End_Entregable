@@ -2,6 +2,7 @@ import express from "express";
 import { productsRouter } from "./routers/productsRouter.js";
 import { cartsRouter } from "./routers/cartsRouter.js";
 import { viewsRouter } from "./routers/viewsRouter.js";
+import { userRouter } from "./routers/userRouter.js";
 import ProductsManager from "./managers/productsManager.js";
 import {Server} from 'socket.io';
 import Handlebars from "express-handlebars";
@@ -33,6 +34,7 @@ app.use(express.static('./src/public'))
 
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
+app.use("/api/sessions", userRouter); 
 app.use("/", viewsRouter)
 
 const httpServer = app.listen(PORT, () => { console.log(`server running on PORT: ${PORT}`) })

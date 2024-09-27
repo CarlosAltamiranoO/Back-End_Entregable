@@ -1,11 +1,22 @@
 <h3>Registro</h3>
 <br><br>
-<form action="/register" method="post">
-<label for="user">Nombre de usuario: </label>
-<input type="text" name="user">
+<form action="/api/sessions/register" method="post">
+<label for="firtsname">Nombre: </label>
+<input type="text" name="firtsname" required>
 <br><br>
-<label for="password">Contraseñá: </label>
-<input type="text" name="password">
+<label for="lastname">Apellido: </label>
+<input type="text" name="lastname" required>
+<br><br>
+<label for="email">E-mail: </label>
+<input type="text" name="email" required>
+<br><br>
+<label for="age">edad: </label>
+<input type="number" name="age" required>
+<br><br>
+<label for="pass">Contraseñá: </label>
+<input type="text" name="pass" required>
 <br><br>
 <button type="submit"> Registrarse</button>
 </form>
+
+
