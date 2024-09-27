@@ -1,0 +1,136 @@
+<h3>cargar producto</h3><br>
+<form id="formCargarProductos">
+  <label for="input_title">Titulo: </label><input type="text" name="title" id="input_title"><br>
+  <label for="input_description">Descripcion: </label><input type="text" name="description" id="input_description"><br>
+  <label for="input_code">Codigo: </label><input type="text" name="code" id="input_code"><br>
+  <label for="input_price">Precio: $</label><input type="number" name="price" id="input_price"><br>
+  <label for="input_thumbnail">thumbnail: </label><input type="text" name="thumbnail" id="input_thumbnail"><br>
+  <label for="input_category">Categoria: </label><input type="text" name="category" id="input_category"><br>
+  <label for="input_stock">Stock: </label><input type="number" name="stock" id="input_stock"><br>
+  <label for="select-status">Status: </label>
+  <select name="status" id="select-status">
+    <option value="true" selected>true</option>
+    <option value="false">false</option>
+  </select><br><br>
+  <button type="submit">Guardar</button>
+</form>
+<hr>
+<h3>Borrar producto producto</h3><br>
+<form id="formBorrarProducto">
+  <label for="input_idErase">id del producto a borrar: </label><input type="text" name="idErase" id="input_idErase"><br>
+  <br><button type="submit">Borrar</button>
+</form>
+<hr>
+<h3>Modificar producto</h3><br>
+<form id="formModificarProducto">
+  <label for="input_idModificar">id del producto a modificar: </label><input type="text" name="idModificar"
+    id="input_idModificar"><br>
+  <select name="select" id="select">
+    <option value="title" selected>Titulo</option>
+    <option value="description">Descripcion</option>
+    <option value="price">precio</option>
+    <option value="thumbnail">thumbnail</option>
+    <option value="category">categoria</option>
+    <option value="stock">stock</option>
+    <option value="status">status</option>
+  </select>
+  <label for="input_Modificar">valor a cambiar: </label><input type="text" name="modificar" id="input_Modificar"><br>
+  <br><button type="submit">Modificar</button>
+</form>
+<hr>
+<h3>lista de productos</h3><br>
+<form method="get">
+  <input type="hidden" name="page" value="{{productos.page}}">
+  <input type="hidden" name="category" value="{{productos.category}}">
+  <input type="hidden" name="sort" value="{{productos.sort}}">
+  <label for="input_limit">Límite de resultados por página:</label>
+  <input type="number" name="limit" id="input_limit" value="{{productos.limit}}">
+  <input type="submit" value="limitar productos por paguina">
+</form>
+<h4>paguina {{productos.page}} de {{productos.totalPages}}</h4>
+
+<select onchange="location = this.value">
+  <option value="" selected>Ordenar precio</option>
+  <option value="/?page={{productos.page}}&sort=1&limit={{productos.limit}}&query={{productos.category}}">acendente
+  </option>
+  <option value="/?page={{productos.page}}&sort=-1&limit={{productos.limit}}&query={{productos.category}}">decendente
+  </option>
+  <option value="/?page={{productos.page}}&sort=&limit={{productos.limit}}&query={{productos.category}}">sin ordenar
+  </option>
+</select>
+
+<select onchange="location = this.value">
+  <option value="" selected>seleccione categoria</option>
+  <option value="/?page={{productos.page}}&sort={{productos.sort}}&limit={{productos.limit}}&query=notebook">notebook
+  </option>
+  <option value="/?page={{productos.page}}&sort={{productos.sort}}&limit={{productos.limit}}&query=perifericos">
+    perifericos</option>
+  <option value="/?page={{productos.page}}&sort={{productos.sort}}&limit={{productos.limit}}&query=telefonia Mobile">
+    telefonia Mobile</option>
+  <option value="/page={{productos.page}}&sort={{productos.sort}}&limit={{productos.limit}}&query=PC de escritorio">PC
+    de escritorio</option>
+  <option value="/?page={{productos.page}}&sort={{productos.sort}}&limit={{productos.limit}}&query=">sin categoria
+  </option>
+</select>
+<br>
+<span>|| Categoria: {{productos.category}} ||</span>
+
+{{#if hayProductos}}
+<ul>
+  {{#each productos.docs}}
+  </a>
+  <li>id: {{this._id}} | Titulo: {{this.title}} | Desripcion : {{this.description}} | codigo: {{this.code}} | Precio:
+    {{this.price}} | Categoria: {{this.category}} | Stock: {{this.stock}}| Status: {{this.status}} </li><br>
+  {{/each}}
+</ul>
+{{else}}
+<p>no hay producto para mostrar</p>
+{{/if}}
+{{#if productos.hasPrevPage}}
+<a href="/?page={{productos.prevPage}}&limit={{productos.limit}}&sort={{productos.sort}}&query={{productos.category}}">paguina
+  previa</a>
+{{/if}}
+{{#if productos.hasNextPage}}
+<a href="/?page={{productos.nextPage}}&limit={{productos.limit}}&sort={{productos.sort}}&query={{productos.category}}">paguina
+  siguiente</a>
+{{/if}}
+<hr>
+<h3>carrito</h3><br>
+<form id="formCrearCarrito">
+  <input type="submit" value="Crear carrito">
+  <p id="resCarrito"></p>
+</form>
+<h3>cargar producto al carrito</h3><br>
+<form id="formCargarCarrito">
+  <label for="input_idCargarCarrito">id del carrito: </label><input type="text" name="idCargarCarrito"
+    id="input_idCargarCarrito"><br>
+  <label for="input_idCargarProducto">id del producto a cargar: </label><input type="text" name="idCargarProducto"
+    id="input_idCargarProducto"><br>
+  <br><input type="submit" value="Cargar al carrito">
+  <p id="resBCarrito"></p>
+</form>
+<hr>
+<hr>
+
+
+<script src="/js/formProductos.js"></script>
+
+
+
+
+
+
+
+
+
+{{!-- {{#if hayProductos}}
+<ul>
+  {{#each productos}}
+  </a>
+  <li> id: {{this.id}} | Titulo: {{this.title}} | Desripcion : {{this.description}} | codigo: {{this.code}} | Precio:
+    {{this.price}} | Stock: {{this.stock}}| Status: {{this.status}}</li><br>
+  {{/each}}
+</ul>
+{{else}}
+<p>no hay producto para mostrar</p>
+{{/if}} --}}
