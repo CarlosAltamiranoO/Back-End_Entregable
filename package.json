@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/app.js"
+    "dev": "node --watch src/app.js"
   },
   "author": "",
   "license": "ISC",
