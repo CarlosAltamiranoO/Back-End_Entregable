@@ -63,7 +63,7 @@ userRouter.post("/login", async (req, res) => {
         //Generamos el token JWT: 
         console.log(usuarioEncontrado)
         
-        const token = jwt.sign({usuario: usuarioEncontrado.first_name, rol: usuarioEncontrado.rol}, "coderhouse", {expiresIn: "1h"});
+        const token = jwt.sign({usuario: usuarioEncontrado.first_name+" "+usuarioEncontrado.last_name, email: usuarioEncontrado.email, cart: usuarioEncontrado.cart, age: usuarioEncontrado.age, rol: usuarioEncontrado.rol}, "coderhouse", {expiresIn: "1h"});
 
         //Enviamos con la cookie: 
 
@@ -84,10 +84,16 @@ userRouter.post("/logout", (req, res) => {
 }) 
 
 userRouter.get("/current", passport.authenticate("current", {session: false}), (req, res) => {
+    console.log(req.user.age)
 
     res.render("home2", {
         pageTitle: "PRUEBA",
         labelTitle: "logeado",
-        usuario: req.user.usuario
+        usuario: req.user.usuario,
+        email: req.user.email,
+        age: req.user.age,
+        cart: req.user.cart,
+        rol: req.user.rol
     });
 })
+
